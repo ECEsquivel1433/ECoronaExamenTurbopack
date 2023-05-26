@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Usuario";
+}
+
+<h2>Usuario</h2>
+
+    <div class=" " row>
+        <button class="btn-danger col-md-2" onclick="GetUser()">Agregar</button>
+        <button class="btn-danger col-md-2" onclick="Limpiar()">Limpiar</button>
+    </div>
+<br/>
+<body>
+    <table class="table table-bordered table-responsive" id="Table" >
+        <thead>
+            <tr>
+                <th>Nombree</th>
+                <th>Correo</th>
+                <th>Direccion</th>
+                <th>Genero</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</body>
+
+<script type="text/javascript">
+
+    function GetUser() {
+        $.ajax({
+            url: 'https://randomuser.me/api/',
+            method: "GET",
+            dataType: 'json',
+            success: function (results) {
+
+                var tableString = '<tr>' +
+                    '<td>' + results.results[0].name.first + '</td>' +
+                    '<td>' + results.results[0].email + '</td>' +
+                    '<td>' + results.results[0].location.street.name + '</td>' +
+                    '<td>' + results.results[0].gender + '</td>' +
+                    '<td>' + '<img src ="' + results.results[0].picture.large + '"/>' + '</td> ' +
+                    '</tr>';
+                $('#Table tbody').append(tableString);
+            },
+            error: function (ex) {
+                alert('Failed.' + ex);
+            }
+        });
+    }
+</script>
+
+
+<script type="text/javascript">
+
+    function Limpiar() {
+        $('#Table tbody').empty();
+    }
+
+</script>
